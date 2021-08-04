@@ -11,6 +11,8 @@ const SERVICE_3_ENDPOINT = process.env.SERVICE_3_ENDPOINT
 const AUTH_DOMAIN = process.env.AUTH_DOMAIN
 const AUTH_AUDIENCE = process.env.AUTH_AUDIENCE
 
+const PORT = process.env.PORT || 4000;
+
 const checkJwt = jwt({
     // Dynamically provide a signing key based on the [Key ID](https://tools.ietf.org/html/rfc7515#section-4.1.4) header parameter ("kid") and the signing keys provided by the JWKS endpoint.
     secret: jwksRsa.expressJwtSecret({
@@ -57,7 +59,6 @@ const server = new ApolloServer({
 const app = express();
 app.use(checkJwt);
 server.applyMiddleware({ app, path: '/' });
-const PORT = process.env.PORT || 4000;
 app.listen(
     {port: PORT},
     () => {
